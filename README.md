@@ -21,7 +21,9 @@ A RESTful API built with Go, Gin, and PostgreSQL.
 - **Migrations**: Goose
 - **Auth**: JWT (HS256) + bcrypt
 - **Config**: godotenv
+```
 
+```text
 ## Project Structure
 .
 ├── cmd/
@@ -43,6 +45,7 @@ A RESTful API built with Go, Gin, and PostgreSQL.
 ├── go.mod
 ├── go.sum
 └── README.md
+```
 
 ## Getting Started
 
