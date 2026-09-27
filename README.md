@@ -44,7 +44,6 @@ A RESTful API built with Go, Gin, and PostgreSQL.
 ├── go.mod
 ├── go.sum
 └── README.md
-```
 
 ## Getting Started
 
