@@ -165,7 +165,6 @@ curl http://localhost:8080/api/me \
 ```
 
 ## License
-
-MIT[LICENSE]
+[MIT](LICENSE)
 
 ```
