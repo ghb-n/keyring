@@ -23,8 +23,8 @@ A RESTful API built with Go, Gin, and PostgreSQL.
 - **Config**: godotenv
 ```
 
-```text
 ## Project Structure
+```text
 .
 ├── cmd/
 │   └── server/
