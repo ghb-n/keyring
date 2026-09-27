@@ -1,4 +1,3 @@
-```markdown
 # Backend
 
 A RESTful API built with Go, Gin, and PostgreSQL.
