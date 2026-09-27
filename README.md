@@ -26,7 +26,6 @@ A RESTful API built with Go, Gin, and PostgreSQL.
 
 ```
 
-.
 ├── cmd/
 │   └── server/
 │       └── main.go           # Entry point
@@ -167,6 +166,6 @@ curl http://localhost:8080/api/me \
 
 ## License
 
-MIT
+MIT(MIT)[LICENSE]
 
 ```
