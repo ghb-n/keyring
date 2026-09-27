@@ -23,9 +23,8 @@ A RESTful API built with Go, Gin, and PostgreSQL.
 - **Config**: godotenv
 
 ## Project Structure
-
 ```
-
+.
 ├── cmd/
 │   └── server/
 │       └── main.go           # Entry point
@@ -45,9 +44,7 @@ A RESTful API built with Go, Gin, and PostgreSQL.
 ├── go.mod
 ├── go.sum
 └── README.md
-
 ```
-
 ## Getting Started
 
 ### Prerequisites
@@ -166,5 +163,3 @@ curl http://localhost:8080/api/me \
 
 ## License
 [MIT](LICENSE)
-
-```
