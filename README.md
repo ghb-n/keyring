@@ -20,9 +20,9 @@ A RESTful API built with Go, Gin, and PostgreSQL.
 - **Migrations**: Goose
 - **Auth**: JWT (HS256) + bcrypt
 - **Config**: godotenv
-```
 
 ## Project Structure
+
 ```text
 .
 ├── cmd/
