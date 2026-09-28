@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 
 	"ghbn/gin-study/internal/models"
@@ -38,6 +39,8 @@ func NewUserHandler(userService *services.UserService) *UserHandler {
 
 func (h *UserHandler) GetMe(c *gin.Context) {
 	userID := c.GetInt("userID")
+	fmt.Printf("DEBUG GetMe: userID = %d\n", userID)
+
 	user, err := h.userService.GetByID(c.Request.Context(), userID)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "user not found"})

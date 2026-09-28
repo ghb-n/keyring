@@ -2,6 +2,7 @@ package routes
 
 import (
 	"ghbn/gin-study/internal/handlers"
+	"ghbn/gin-study/internal/middlewares"
 
 	"github.com/gin-gonic/gin"
 )
@@ -17,4 +18,10 @@ func Setup(r *gin.Engine,
 
 	r.POST("/register", authHandler.Register)
 	r.POST("/login", authHandler.Login)
+
+	api := r.Group("/api")
+	api.Use(middlewares.Auth(jwtSecret))
+	{
+		api.GET("/me", userHandler.GetMe)
+	}
 }
