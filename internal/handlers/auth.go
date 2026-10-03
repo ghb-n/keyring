@@ -21,17 +21,23 @@ type LoginRequest struct {
 }
 
 type AuthResponse struct {
-	Token string       `json:"token"`
-	User  UserResponse `json:"user"`
+	AccessToken  string       `json:"access_token"`
+	RefreshToken string       `json:"refresh_token"`
+	User         UserResponse `json:"user"`
 }
 
 type AuthHandler struct {
-	userService *services.UserService
-	jwtSecret   string
+	userService    *services.UserService
+	refreshService *services.RefreshService
+	jwtSecret      string
 }
 
-func NewAuthHandler(userService *services.UserService, jwtSecret string) *AuthHandler {
-	return &AuthHandler{userService: userService, jwtSecret: jwtSecret}
+func NewAuthHandler(userService *services.UserService, refreshService *services.RefreshService, jwtSecret string) *AuthHandler {
+	return &AuthHandler{
+		userService:    userService,
+		refreshService: refreshService,
+		jwtSecret:      jwtSecret,
+	}
 }
 
 func (h *AuthHandler) Register(c *gin.Context) {
@@ -47,15 +53,22 @@ func (h *AuthHandler) Register(c *gin.Context) {
 		return
 	}
 
-	token, err := auth.GenerateToken(user.ID, user.Email, h.jwtSecret)
+	accessToken, err := auth.GenerateToken(user.ID, user.Email, h.jwtSecret)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to generate token"})
 		return
 	}
 
+	refreshToken, err := h.refreshService.Generate(c.Request.Context(), user.ID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to generate refresh token"})
+		return
+	}
+
 	c.JSON(http.StatusCreated, AuthResponse{
-		Token: token,
-		User:  toUserResponse(user),
+		AccessToken:  accessToken,
+		RefreshToken: refreshToken,
+		User:         toUserResponse(user),
 	})
 }
 
@@ -72,14 +85,21 @@ func (h *AuthHandler) Login(c *gin.Context) {
 		return
 	}
 
-	token, err := auth.GenerateToken(user.ID, user.Email, h.jwtSecret)
+	accessToken, err := auth.GenerateToken(user.ID, user.Email, h.jwtSecret)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to generate token"})
 		return
 	}
 
+	refreshToken, err := h.refreshService.Generate(c.Request.Context(), user.ID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to generate refresh token"})
+		return
+	}
+
 	c.JSON(http.StatusOK, AuthResponse{
-		Token: token,
-		User:  toUserResponse(user),
+		AccessToken:  accessToken,
+		RefreshToken: refreshToken,
+		User:         toUserResponse(user),
 	})
 }

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	config "ghbn/gin-study/internal/env"
+	config "ghbn/gin-study/internal/config"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 )

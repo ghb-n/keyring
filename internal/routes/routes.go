@@ -10,6 +10,7 @@ import (
 func Setup(r *gin.Engine,
 	authHandler *handlers.AuthHandler,
 	userHandler *handlers.UserHandler,
+	refreshHandler *handlers.RefreshHandler,
 	jwtSecret string,
 ) {
 	r.GET("/ping", func(c *gin.Context) {
@@ -18,10 +19,13 @@ func Setup(r *gin.Engine,
 
 	r.POST("/register", authHandler.Register)
 	r.POST("/login", authHandler.Login)
-
+	r.POST("/request", refreshHandler.Refresh)
+	r.POST("/logout", refreshHandler.Logout)
 	api := r.Group("/api")
 	api.Use(middlewares.Auth(jwtSecret))
 	{
 		api.GET("/me", userHandler.GetMe)
+		api.POST("/user/update", userHandler.UpdateMe)
+		api.POST("/user/delete", userHandler.DeleteMe)
 	}
 }

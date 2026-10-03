@@ -29,12 +29,13 @@ func main() {
 
 	// 3. Repository
 	userRepo := repository.NewUserRepository(pool)
-
+	refreshRepo := repository.NewRefreshRepository(pool)
 	// 4. Service
 	userService := services.NewUserService(userRepo)
-
+	refreshService := services.NewRefreshService(refreshRepo)
 	// 5. Handlers
-	authHandler := handlers.NewAuthHandler(userService, cfg.JWTSecret)
+	authHandler := handlers.NewAuthHandler(userService, refreshService, cfg.JWTSecret)
+
 	userHandler := handlers.NewUserHandler(userService)
 
 	// 6. Router
